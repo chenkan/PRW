@@ -1,0 +1,12 @@
+<div class="container">
+  <div class="jumbotron">
+    <h1>My Scaffolds</h1>
+
+    <h2>...your scaffolds are just a click away.</h2>
+    <% _.each(_.keys(sails.controllers), function(controller) { %>
+
+    <a href="/<%= controller %>" class="btn btn-lg btn-success spar-list"><%= controller %></a>
+
+    <% }) %>
+  </div>
+</div>

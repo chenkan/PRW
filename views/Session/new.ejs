@@ -1,0 +1,20 @@
+<form class="form-signin" role="form" action="/session/create">
+  <% if(flash && flash.err) { %>
+    <ul class="alert alert-success">
+      <% Object.keys(flash.err).forEach(function(error) { %>
+        <li><%- JSON.stringify(flash.err[error]) %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+  <input type="hidden" name="_csrf" value="<%= _csrf %>" />
+  <h2 class="form-signin-heading">登陆</h2>
+  <input type="text" class="form-control" placeholder="邮箱地址" autofocus="" name="login">
+  <input type="password" class="form-control" placeholder="密码" required="" name="password">
+  <div class="checkbox">
+    <label>
+    <input type="checkbox" value="remember-me"> Remember me
+    </label>
+  </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button>
+	<a href="/user">Back to list</a>
+</form>

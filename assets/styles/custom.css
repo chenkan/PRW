@@ -1,0 +1,37 @@
+form.edit {
+	margin: 10px; 
+	padding: 50px; 
+	width: 500px;
+    border: 2px solid;
+}
+
+form.show {
+	margin: 10px; 
+	padding: 50px; 
+	width: 500px;
+    border: 2px solid;
+}
+
+form.new {
+	margin: 10px; 
+	padding: 50px; 
+	width: 500px;
+    border: 2px solid;
+}
+
+button.ep {
+    background-color: deepskyblue;
+    color: #ffffff;
+}
+
+button.grey {
+    background-color: grey;
+}
+
+button.blue {
+    background-color: dodgerblue;
+}
+
+button.orange {
+    background-color: gold;
+}

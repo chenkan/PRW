@@ -1,0 +1,19 @@
+<form class="show">
+	<div class="form-group">
+		<h2> a user... </h2>
+		
+	<div class="form-group" style="width: 400px;">
+	<label>name</label>
+	<input value="<%= user.name %>" name="name" type="text" class="form-control" disabled/>
+	</div>
+
+	<div class="form-group" style="width: 400px;">
+	<label>name</label>
+	<input value="<%= user.robot %>" name="robot" type="text" class="form-control" disabled/>
+	</div>
+
+</div>
+</div>
+<a href="/user/edit/<%=user.id %>" class="btn btn-default">Edit</a> |
+<a href="/user">Back to list</a>
+</form>
