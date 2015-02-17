@@ -21,27 +21,15 @@
 
 module.exports.routes = {
 
-    '/': {
-        view: 'homepage'
-    },
-
+    'get /': 'IndexController.index',
     'get /signup': 'UserController.new',
     'get /login': 'SessionController.new',
 
-     '/debug' : {
-       view: 'debug'
-     },
+    '/debug': {
+        view: 'debug'
+    },
 
-     '/shop' : {
-       view: 'shop'
-     }
-
-
-  // Custom routes here...
-
-
-  // If a request to a URL doesn't match any of the custom routes above, it is matched
-  // against Sails route blueprints.  See `config/blueprints.js` for configuration options
-  // and examples.
-
+    '/shop': {
+        view: 'shop'
+    }
 };
