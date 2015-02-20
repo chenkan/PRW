@@ -61,16 +61,15 @@ function getMyInfo() {
           me.currentCards.push(me.equipment_cards.accessory.id);
         }
       }
-      for (var p in me.active_skill_cards) {
-        me.currentCards.push(me.active_skill_cards[p].id);
-      }
-      for (var q in me.passive_skill_cards) {
-        me.currentCards.push(me.passive_skill_cards[q].id);
-      }
-      for (var m in me.currentCards) {
-        var id = me.currentCards[m];
-        $('.unEp[name=' + id + ']').first().removeClass('unEp').addClass('ep');
-      }
+        $.each(me.active_skill_cards, function (name, value) {
+            me.currentCards.push(value.id);
+        });
+        $.each(me.passive_skill_cards, function(name, value) {
+            me.currentCards.push(value.id);
+        });
+        $.each(me.currentCards, function (name, value) {
+            $('.unEp[name=' + value + ']').first().removeClass('unEp').addClass('ep');
+        });
     } else {
       alert("something goes wrong");
     }
