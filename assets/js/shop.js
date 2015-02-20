@@ -86,7 +86,9 @@ function getMyInfo() {
  */
 function drawMyCard(index, value) {
     var div = $("<div></div>").appendTo('#myCards');
-    var e = $("<button class='btn' name='" + index + "'>" + value.name + " / " + value.desc + "</button>").appendTo(div);
+    var e = $("<button rel='popover' data-content='" + value.desc + "' class='btn' name='" + index + "'>" + value.name + "</button>").appendTo(div);
+    e.popover({trigger: "hover"});
+    e.css("width", "30%").css("text-align", "left");
     var e2 = $("<button class='btn btn-warning'>卖出</button>").appendTo(div);
     if (index.indexOf("1") === 0) {         // 武器卡
         if (value.type === 1) {
@@ -159,7 +161,8 @@ function getShopInfo() {
     io.socket.post('/shop/getShopInfo', function (data) {
         shop = data;
         $.each(shop, function (index, value) {
-            var e = $("<div><button class='btn' id='" + index + "'>" + value.card.name + " / " + value.card.desc + "</button></div>").appendTo('#shopCards');
+            var e = $("<div><button rel='popover' data-content='" + value.card.desc + "' class='btn' id='" + index + "'>" + value.card.name + "</button></div>").appendTo('#shopCards');
+            $(e).children("[data-content]").css("width", "30%").css("text-align", "left");
             var e2 = $("<button class='btn'>" + value.buyPrice + " G</button>").appendTo(e);
 
             // 购买动作
@@ -169,13 +172,13 @@ function getShopInfo() {
 
             // 卡牌星级
             if (value.star === 1) {
-                e2.addClass('grey');
+                e2.addClass('btn-inverse');
             }
             if (value.star === 2) {
-                e2.addClass('blue');
+                e2.addClass('btn-info');
             }
             if (value.star === 3) {
-                e2.addClass('orange');
+                e2.addClass('btn-warning');
             }
 
             // 卡牌分类
@@ -222,7 +225,7 @@ function getShopInfo() {
                 });
             }
         });
-
+        $("[data-content]").popover({trigger: "hover"});
     });
 }
 
@@ -306,7 +309,3 @@ function unEquipCard(target, cardId) {
         }
     });
 }
-
-//if($('#getMyInfo')) {
-//    getMyInfo();
-//}
