@@ -25,6 +25,7 @@
     "sails-disk": "git://github.com/balderdashy/sails-disk.git#v0.10",
     "sails-generate-scaffold": "0.0.5",
     "sails-mongo": "~0.10.4",
+    "underscore": "^1.8.1",
     "watchjs": "0.0.0",
     "xml2js": "~0.4.4"
   },

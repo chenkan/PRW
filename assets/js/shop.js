@@ -35,7 +35,7 @@ function getMyInfo() {
     var code = data.code;
     if (code === 200) {
       $('#getMyInfo').css("display", "none");
-      me = data.data.user_info.myLogin;
+      me = data.data.user_info[myLogin];
 
       // 金币
       $('#gold').html(me.gold_coin);
