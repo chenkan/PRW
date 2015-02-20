@@ -1,5 +1,8 @@
 var me;
 var shop;
+var hasGotMyInfo = false;
+
+var cardClasses = ['.card_main_weapon', '.card_assist_weapon', '.card_body', '.card_attachment', '.card_as', '.card_ps'];
 
 $('#getMyInfo').click(getMyInfo);
 
@@ -30,6 +33,10 @@ $('#ps').click(function () {
 
 
 function getMyInfo() {
+    if (hasGotMyInfo) {
+        showAllKindCard();
+        return;
+    }
     var myLogin = $('#myLogin').val();
     io.socket.post('/session/getUserInfo', {login: myLogin}, function (data) {
         var code = data.code;
@@ -70,6 +77,8 @@ function getMyInfo() {
             $.each(me.currentCards, function (name, value) {
                 $('.unEp[name=' + value + ']').first().removeClass('unEp').addClass('ep').addClass('btn-info');
             });
+
+            hasGotMyInfo = true;
         } else {
             alert("something goes wrong");
         }
@@ -154,7 +163,18 @@ function showCard4Class(clazz) {
  * 隐藏所有卡牌
  */
 function hideAllKindCard() {
-    $('[class^="card"]').parent().css("display", "none");
+    $.each(cardClasses, function(index, value) {
+        $(value).parent().css("display", "none");
+    });
+}
+
+/**
+ * 显示所有卡牌
+ */
+function showAllKindCard() {
+    $.each(cardClasses, function(index, value) {
+        $(value).parent().css("display", "block");
+    });
 }
 
 function getShopInfo() {
