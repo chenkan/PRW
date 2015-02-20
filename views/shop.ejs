@@ -1,20 +1,20 @@
 <div class="row">
-    <div class="col-md-4">
+    <div style="float:left;height:100%;width:20%">
         <input type="text" id="myLogin" style="display: none" value="<%= req.session.user_detail.login %>"><br>
-        <button type="button" id="getMyInfo">查看我的卡牌</button>
-        <br><button type="button" id="mainWeapon">查看主武器卡牌</button>
-        <br><button type="button" id="assistWeapon">查看辅武器卡牌</button>
-        <br><button type="button" id="body">查看机体卡牌</button>
-        <br><button type="button" id="attachment">查看附件卡牌</button>
-        <br><button type="button" id="as">查看主动技能卡牌</button>
-        <br><button type="button" id="ps">查看被动技能卡牌</button>
-        <div>当前金币 <span id="gold">0</span> G</div>
+        <div><button type="button" id="getMyInfo" class="btn btn-primary">查看我的卡牌</button></div>
+        <div><button type="button" id="mainWeapon" class="btn btn-info">主武器</button></div>
+        <div><button type="button" id="assistWeapon" class="btn btn-info">辅武器</button></div>
+        <div><button type="button" id="body" class="btn btn-info">机体</button></div>
+        <div><button type="button" id="attachment" class="btn btn-info">附件</button></div>
+        <div><button type="button" id="as" class="btn btn-info">主动技能</button></div>
+        <div><button type="button" id="ps" class="btn btn-info">被动技能</button></div>
+        <div class="btn btn-inverse">当前金币 <span id="gold">0</span> G</div>
         <div id="card_info"></div>
     </div>
-    <div id="myCards" class="col-md-4" >
+    <div id="myCards" style="float:left;height:100%;width:40%">
         == 已有卡牌 == （单击装备/卸载 高亮为已装备）
     </div>
-    <div id="shopCards" class="col-md-4" >
+    <div id="shopCards" style="float:left;height:100%;width:40%">
         == 商店卡牌 == （单击描述查看详情/单击价格购买）
     </div>
 </div>

@@ -34,7 +34,7 @@ function getMyInfo() {
     io.socket.post('/session/getUserInfo', {login: myLogin}, function (data) {
         var code = data.code;
         if (code === 200) {
-            $('#getMyInfo').css("display", "none");
+            //$('#getMyInfo').css("display", "none");
             me = data.data.user_info[myLogin];
 
             // 金币
@@ -68,7 +68,7 @@ function getMyInfo() {
                 me.currentCards.push(value.id);
             });
             $.each(me.currentCards, function (name, value) {
-                $('.unEp[name=' + value + ']').first().removeClass('unEp').addClass('ep');
+                $('.unEp[name=' + value + ']').first().removeClass('unEp').addClass('ep').addClass('btn-info');
             });
         } else {
             alert("something goes wrong");
@@ -86,8 +86,8 @@ function getMyInfo() {
  */
 function drawMyCard(index, value) {
     var div = $("<div></div>").appendTo('#myCards');
-    var e = $("<button name='" + index + "'>" + value.name + " / " + value.desc + "</button>").appendTo(div);
-    var e2 = $("<button>卖出</button>").appendTo(div);
+    var e = $("<button class='btn' name='" + index + "'>" + value.name + " / " + value.desc + "</button>").appendTo(div);
+    var e2 = $("<button class='btn btn-warning'>卖出</button>").appendTo(div);
     if (index.indexOf("1") === 0) {         // 武器卡
         if (value.type === 1) {
             e.addClass('card_main_weapon').click(function (event) {
@@ -159,8 +159,8 @@ function getShopInfo() {
     io.socket.post('/shop/getShopInfo', function (data) {
         shop = data;
         $.each(shop, function (index, value) {
-            var e = $("<div><button id='" + index + "'>" + value.card.name + " / " + value.card.desc + "</button></div>").appendTo('#shopCards');
-            var e2 = $("<button>" + value.buyPrice + " G</button>").appendTo(e);
+            var e = $("<div><button class='btn' id='" + index + "'>" + value.card.name + " / " + value.card.desc + "</button></div>").appendTo('#shopCards');
+            var e2 = $("<button class='btn'>" + value.buyPrice + " G</button>").appendTo(e);
 
             // 购买动作
             e2.click(function (event) {
@@ -285,7 +285,7 @@ function epOrUnEp(target) {
 function equipCard(target, cardId) {
     io.socket.post('/shop/equipCard', {myName: me.login, cardId: cardId}, function (data) {
         if (data && data.code === 200) {
-            $(target).removeClass('unEp').addClass('ep');
+            $(target).removeClass('unEp').addClass('ep').addClass('btn-info');
         } else {
             alert(data);
         }
@@ -300,7 +300,7 @@ function equipCard(target, cardId) {
 function unEquipCard(target, cardId) {
     io.socket.post('/shop/unEquipCard', {myName: me.login, cardId: cardId}, function (data) {
         if (data && data.code === 200) {
-            $(target).removeClass('ep').addClass('unEp');
+            $(target).removeClass('ep').addClass('unEp').removeClass('btn-info');
         } else {
             alert(data);
         }
