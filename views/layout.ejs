@@ -5,16 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <!--STYLES-->
     <link rel="stylesheet" href="/styles/app.css">
+    <link rel="stylesheet" href="/styles/bootstrap.css">
     <link rel="stylesheet" href="/styles/bootstrapScaffold.css">
     <link rel="stylesheet" href="/styles/custom.css">
     <link rel="stylesheet" href="/styles/jquery.rokkocode.css">
     <!--STYLES END-->
 </head>
 <body class="container">
+<% if (req.session.user_detail) { %>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <a class="brand nav" href="/">Pocket Robots War</a>
+        <ul class="nav">
+            <li><a href="/user_info">Hi, <%= req.session.user_detail.nickname %></a></li>
+            <li><a href="/">首页</a></li>
+            <li><a href="/shop">商店</a></li>
+            <li><a href="/battle_field">战斗</a></li>
+        </ul>
+        <span><a href="/session/destroy" class="btn btn-info pull-right">登出</a></span>
+    </div>
+</div>
+<% } %>
 <div class="jumbotron">
-    <% if (req.session.user_detail) { %>
-    <div><a href="/session/destroy" class="btn btn-warning pull-right">登出</a></div>
-    <% } %>
     <div><%- body %></div>
 </div>
 <!--SCRIPTS-->
