@@ -5,27 +5,27 @@ $('#getMyInfo').click(getMyInfo);
 
 $('#mainWeapon').click(function () {
   hideAllKindCard();
-  showCard4Class('card_main_weapon')
+  showCard4Class('card_main_weapon');
 });
 $('#assistWeapon').click(function () {
   hideAllKindCard();
-  showCard4Class('card_assist_weapon')
+  showCard4Class('card_assist_weapon');
 });
 $('#body').click(function () {
   hideAllKindCard();
-  showCard4Class('card_body')
+  showCard4Class('card_body');
 });
 $('#attachment').click(function () {
   hideAllKindCard();
-  showCard4Class('card_attachment')
+  showCard4Class('card_attachment');
 });
 $('#as').click(function () {
   hideAllKindCard();
-  showCard4Class('card_as')
+  showCard4Class('card_as');
 });
 $('#ps').click(function () {
   hideAllKindCard();
-  showCard4Class('card_ps')
+  showCard4Class('card_ps');
 });
 
 
@@ -33,9 +33,9 @@ function getMyInfo() {
   var myLogin = $('#myLogin').val();
   io.socket.post('/session/getUserInfo', {login: myLogin}, function (data) {
     var code = data.code;
-    if (code == 200) {
+    if (code === 200) {
       $('#getMyInfo').css("display", "none");
-      me = data.data['user_info'][myLogin];
+      me = data.data.user_info.myLogin;
 
       // 金币
       $('#gold').html(me.gold_coin);
@@ -72,7 +72,7 @@ function getMyInfo() {
         $('.unEp[name=' + id + ']').first().removeClass('unEp').addClass('ep');
       }
     } else {
-      alert("something goes wrong")
+      alert("something goes wrong");
     }
   });
 
@@ -89,8 +89,8 @@ function drawMyCard(index, value) {
   var div = $("<div></div>").appendTo('#myCards');
   var e = $("<button name='" + index + "'>" + value.name + " / " + value.desc + "</button>").appendTo(div);
   var e2 = $("<button>卖出</button>").appendTo(div);
-  if (index.indexOf("1") == 0) {         // 武器卡
-    if (value.type == 1) {
+  if (index.indexOf("1") === 0) {         // 武器卡
+    if (value.type === 1) {
       e.addClass('card_main_weapon').click(function (event) {
         epOrUnEp(event.target);
       });
@@ -98,7 +98,7 @@ function drawMyCard(index, value) {
         sellCard(event.target);
       });
     }
-    if (value.type == 2) {
+    if (value.type === 2) {
       e.addClass('card_assist_weapon').click(function (event) {
         epOrUnEp(event.target);
       });
@@ -106,7 +106,7 @@ function drawMyCard(index, value) {
         sellCard(event.target);
       });
     }
-    if (value.type == 3) {
+    if (value.type === 3) {
       e.addClass('card_body').click(function (event) {
         epOrUnEp(event.target);
       });
@@ -114,7 +114,7 @@ function drawMyCard(index, value) {
         sellCard(event.target);
       });
     }
-    if (value.type == 4) {
+    if (value.type === 4) {
       e.addClass('card_attachment').click(function (event) {
         epOrUnEp(event.target);
       });
@@ -122,7 +122,7 @@ function drawMyCard(index, value) {
         sellCard(event.target);
       });
     }
-  } else if (index.indexOf("2") == 0) { // 主动技能
+  } else if (index.indexOf("2") === 0) { // 主动技能
     e.addClass('card_as').click(function (event) {
       epOrUnEp(event.target);
     });
@@ -161,7 +161,7 @@ function getShopInfo() {
     shop = data;
     $.each(shop, function (index, value) {
       var e = $("<div><button id='" + index + "'>" + value.card.name + " / " + value.card.desc + "</button></div>").appendTo('#shopCards');
-      var e2 = $("<button>" + value['buyPrice'] + " G</button>").appendTo(e);
+      var e2 = $("<button>" + value.buyPrice + " G</button>").appendTo(e);
 
       // 购买动作
       e2.click(function (event) {
@@ -169,47 +169,47 @@ function getShopInfo() {
       });
 
       // 卡牌星级
-      if (value['star'] == 1) {
+      if (value.star === 1) {
         e2.addClass('grey');
       }
-      if (value['star'] == 2) {
+      if (value.star === 2) {
         e2.addClass('blue');
       }
-      if (value['star'] == 3) {
+      if (value.star === 3) {
         e2.addClass('orange');
       }
 
       // 卡牌分类
-      if (index.indexOf("1") == 0) {         // 武器卡
-        if (value.card.type == 1) {
+      if (index.indexOf("1") === 0) {         // 武器卡
+        if (value.card.type === 1) {
           $('#' + index).addClass('card_main_weapon').click(function (event) {
             showInBoard('card_info', shop[event.target.id]);
           }).dblclick(function (event) {
             buyCard(event.target.id);
           });
         }
-        if (value.card.type == 2) {
+        if (value.card.type === 2) {
           $('#' + index).addClass('card_assist_weapon').click(function (event) {
             showInBoard('card_info', shop[event.target.id]);
           }).dblclick(function (event) {
             buyCard(event.target.id);
           });
         }
-        if (value.card.type == 3) {
+        if (value.card.type === 3) {
           $('#' + index).addClass('card_body').click(function (event) {
             showInBoard('card_info', shop[event.target.id]);
           }).dblclick(function (event) {
             buyCard(event.target.id);
           });
         }
-        if (value.card.type == 4) {
+        if (value.card.type === 4) {
           $('#' + index).addClass('card_attachment').click(function (event) {
             showInBoard('card_info', shop[event.target.id]);
           }).dblclick(function (event) {
             buyCard(event.target.id);
           });
         }
-      } else if (index.indexOf("2") == 0) { // 主动技能
+      } else if (index.indexOf("2") === 0) { // 主动技能
         $('#' + index).addClass('card_as').click(function (event) {
           showInBoard('card_info', shop[event.target.id]);
         }).dblclick(function (event) {
@@ -233,7 +233,7 @@ function getShopInfo() {
  */
 function buyCard(cardId) {
   io.socket.post('/shop/buyCard', {myName: me.login, cardId: cardId}, function (data) {
-    if (data && data.code == 200) {
+    if (data && data.code === 200) {
       $('#gold').html(data.gold);
       var value = data.value;
       drawMyCard(cardId, value);
@@ -251,7 +251,7 @@ function buyCard(cardId) {
 function sellCard(target) {
   if (!$(target).parent().children(":first").hasClass('ep')) {
     io.socket.post('/shop/sellCard', {myName: me.login, cardId: $(target).parent().children(":first")[0].name}, function (data) {
-      if (data && data.code == 200) {
+      if (data && data.code === 200) {
         $('#gold').html(data.gold);
         $(target).parent().remove();
       } else {
@@ -282,7 +282,7 @@ function epOrUnEp(target) {
  */
 function equipCard(target, cardId) {
   io.socket.post('/shop/equipCard', {myName: me.login, cardId: cardId}, function (data) {
-    if (data && data.code == 200) {
+    if (data && data.code === 200) {
       $(target).removeClass('unEp').addClass('ep');
     } else {
       alert(data);
@@ -297,10 +297,14 @@ function equipCard(target, cardId) {
  */
 function unEquipCard(target, cardId) {
   io.socket.post('/shop/unEquipCard', {myName: me.login, cardId: cardId}, function (data) {
-    if (data && data.code == 200) {
+    if (data && data.code === 200) {
       $(target).removeClass('ep').addClass('unEp');
     } else {
       alert(data);
     }
   });
 }
+
+//if($('#getMyInfo')) {
+//    getMyInfo();
+//}

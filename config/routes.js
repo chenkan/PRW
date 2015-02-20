@@ -24,12 +24,5 @@ module.exports.routes = {
     'get /': 'IndexController.index',
     'get /signup': 'UserController.new',
     'get /login': 'SessionController.new',
-
-    '/debug': {
-        view: 'debug'
-    },
-
-    '/shop': {
-        view: 'shop'
-    }
+    'get /shop': 'ShopController.showShop'
 };
