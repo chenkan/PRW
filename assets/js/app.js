@@ -216,10 +216,12 @@ function getWaitingBattleUser() {
     if (code === 200) {
       var users = data.users;
       var info = {};
-      for (var i = 0; i < users.length; i++) {
-          $("#waiting_list").append('<li class="list-group-item" id="' + users[i].login + '"><span class="badge">35%</span>' + users[i].nickname + '</li>');
-        info[users[i].nickname] = users[i].login;
-      }
+        $.each(users, function (index, user) {
+            $("#waiting_list").append('<li class="enemy_item list-group-item" id="' + user.login + '"><span class="badge">35%</span>' + user.nickname + '</li>');
+            $("#" + user.login).click(function (event) {
+                chooseEnemy($(event.target).attr('id'));
+            });
+        });
       showInBoard("info_board_5", info);
     } else {
       showInBoard("info_board_5", "error");
@@ -229,11 +231,15 @@ function getWaitingBattleUser() {
 
 function someoneOnline(who) {
     if (who.login !== myName) {
+        //noinspection JSJQueryEfficiency
         if ($("#" + who.login).length) {
             return;
         }
-        $("#waiting_list").append('<li class="list-group-item" id="' + who.login + '"><span class="badge">35%</span>' + who.nickname + '</li>');
-        $("#" + who.login).hide().fadeIn(500);
+        $("#waiting_list").append('<li class="enemy_item list-group-item" id="' + who.login + '"><span class="badge">35%</span>' + who.nickname + '</li>');
+        //noinspection JSJQueryEfficiency
+        $("#" + who.login).hide().fadeIn(500).click(function (event) {
+            chooseEnemy($(event.target).attr('id'));
+        });
     }
 }
 
@@ -297,4 +303,18 @@ function trimJson (obj, nodeSet) {
       }
     }
   }
+}
+
+function chooseEnemy(who) {
+    if (who === myName) {
+        return;
+    }
+
+    var allEnemies = $(".enemy_item");
+    $.each(allEnemies, function (index, enemy) {
+        $(enemy).removeClass("list-group-item-danger");
+    });
+
+    $("#" + who).addClass("list-group-item-danger");
+    $("#enemyName").val(who);
 }
