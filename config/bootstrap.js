@@ -29,9 +29,9 @@ function setParams() {
     /* 用户状态码 */
     global.status = {};
     global.status.STATUS_OFFLINE        = 0;
-    global.status.STATUS_ONLINE         = 1;
+    global.status.STATUS_ONLINE         = 1; // ignore this status
     global.status.STATUS_WAITING_BATTLE = 2;
-    global.status.STATUS_IN_BATTLE      = 3;
+    global.status.STATUS_IN_BATTLE      = 3; // ignore this status
 
     /* 卡牌类型 */
     global.card = {};

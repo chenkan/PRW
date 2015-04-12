@@ -78,6 +78,50 @@ module.exports = {
         });
     },
 
+    offline: function (req, res) {
+        var login = req.session.user_detail.login;
+        var socketId = sails.sockets.id(req.socket);
+
+        User.find({login: login}).exec(function (err, data) {
+            var rsp = {};
+            if (err) {
+                rsp.code = 500;
+                res.send(rsp);
+            } else {
+                if (data.length !== 1) {
+                    rsp.code = 400;
+                    res.send(rsp);
+                } else {
+                    var user = data[0];
+                    User.update({id: user.id}, {
+                        status: global.status.STATUS_OFFLINE
+                    }).exec(function after(err) {
+                        if (err) {
+                            rsp.code = 500;
+                            res.send(rsp);
+                        } else {
+                            // 通知所有在线用户有用户下线了
+                            User.find({status: global.status.STATUS_WAITING_BATTLE}).exec(function (err, data) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    _.each(data, function(u) {
+                                        console.log(u.nickname);
+                                        sails.sockets.emit(u.socket, 'someone_offline', {login: user.login, nickname: user.nickname});
+                                    });
+                                }
+                            });
+
+                            rsp.code = 200;
+                            res.send(rsp);
+                        }
+                    });
+                }
+            }
+        });
+    },
+
+
     waitingBattle: function (req, res) {
         var socketId = sails.sockets.id(req.socket);
 
@@ -97,6 +141,17 @@ module.exports = {
                             rsp.code = 500;
                             res.send(rsp);
                         } else {
+                            // 通知所有在线用户有新用户上线了
+                            User.find({status: global.status.STATUS_WAITING_BATTLE}).exec(function (err, data) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    _.each(data, function(u) {
+                                        console.log(u.nickname);
+                                        sails.sockets.emit(u.socket, 'someone_online', {login: user.login, nickname: user.nickname});
+                                    });
+                                }
+                            });
                             rsp.code = 200;
                             res.send(rsp);
                         }

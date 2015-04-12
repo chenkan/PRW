@@ -100,7 +100,15 @@ io.socket.on('connect', function socketConnected() {
     clearInterval(mpClock);
   });
 
-  //    io.socket.on('system_info', function(data) {
+    io.socket.on('someone_online', function(data) {
+        someoneOnline(data);
+    });
+
+    io.socket.on('someone_offline', function(data) {
+        someoneOffline(data);
+    });
+
+    //    io.socket.on('system_info', function(data) {
   //        console.log(data);
   //        var textarea = $("#info_board");
   //        var text = textarea.val() + "\n" + data;
@@ -112,7 +120,10 @@ io.socket.on('connect', function socketConnected() {
 
   // When the socket disconnects, hide the UI until we reconnect.
   io.socket.on('disconnect', function() {
-      // TODO 离开『战斗』页面
+      // 离开『战斗』页面
+      //if ($(location).attr('href').indexOf("battle_field") > -1) {
+      //    io.socket.post('/session/offline');
+      //}
   });
 
   $('#battle').click(battle);
@@ -192,6 +203,7 @@ function waitingBattle() {
     var code = data.code;
     if (code === 200) {
       showInBoard("info_board_5", "等待战斗！");
+        getWaitingBattleUser();
     } else {
       showInBoard("info_board_5", "咦！再试试");
     }
@@ -201,10 +213,11 @@ function waitingBattle() {
 function getWaitingBattleUser() {
   io.socket.post('/session/getWaitingBattleUser', function(data) {
     var code = data.code;
-    if (code == 200) {
+    if (code === 200) {
       var users = data.users;
       var info = {};
       for (var i = 0; i < users.length; i++) {
+          $("#waiting_list").append('<li class="list-group-item" id="' + users[i].login + '"><span class="badge">35%</span>' + users[i].nickname + '</li>');
         info[users[i].nickname] = users[i].login;
       }
       showInBoard("info_board_5", info);
@@ -212,6 +225,22 @@ function getWaitingBattleUser() {
       showInBoard("info_board_5", "error");
     }
   });
+}
+
+function someoneOnline(who) {
+    if (who.login !== myName) {
+        if ($("#" + who.login).length) {
+            return;
+        }
+        $("#waiting_list").append('<li class="list-group-item" id="' + who.login + '"><span class="badge">35%</span>' + who.nickname + '</li>');
+        $("#" + who.login).hide().fadeIn(500);
+    }
+}
+
+function someoneOffline(who) {
+    $("#" + who.login).fadeOut(500, function () {
+        $("#" + who.login).remove();
+    });
 }
 
 function getUserInfo() {

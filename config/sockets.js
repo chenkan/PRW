@@ -37,6 +37,19 @@ module.exports.sockets = {
                           console.log(err);
                       } else {
                           console.log(user.nickname + "is offline");
+                          if (user.status === global.status.STATUS_WAITING_BATTLE) {
+                              // 通知所有在线用户有用户下线了
+                              User.find({status: global.status.STATUS_WAITING_BATTLE}).exec(function (err, data) {
+                                  if (err) {
+                                      console.log(err);
+                                  } else {
+                                      _.each(data, function(u) {
+                                          console.log(u.nickname);
+                                          sails.sockets.emit(u.socket, 'someone_offline', {login: user.login, nickname: user.nickname});
+                                      });
+                                  }
+                              });
+                          }
                       }
                   });
               }
