@@ -1,77 +1,35 @@
 <div class="row">
-<div style="float:left;height:100%;width:20%">
-    <h5>在线用户</h5>
-    <ul class="list-group" id="waiting_list">
-    </ul>
-  <!--<button type="button" id="login-btn">登录</button>-->
-  <!--<input type="text" id="login" placeholder="username">-->
-  <!--<input type="password" id="password" placeholder="password">-->
-  <!--<br>-->
-
-  <!--<button type="button" id="online">上线</button>-->
-  <!--<br>-->
-
-  <!--<button type="button" id="getOnlineUser">查看在线用户</button>-->
-  <!--<br>-->
-
-  <!--<button type="button" id="waitingBattle">等待战斗</button>-->
-  <!--<br>-->
-
-  <!--<button type="button" id="getWaitingBattleUser">查看等待战斗用户</button>-->
-  <!--<br>-->
-
-  <!--<input type="text" id="queryLogin" placeholder="查询用户名">-->
-  <!--<button type="button" id="getUserInfo">查看用户信息</button>-->
-  <!--<br>-->
-
-  <input type="text" id="enemyName" placeholder="对手用户名" style="display: none">
-  <button type="button" class="btn btn-danger" id="battle">开始对战</button>
-  <br>
-
-  <!--信息版5 - 显示结构化信息-->
-  <div id="info_board_5" style="display: none"></div>
-</div>
-<div style="float:left;height:100%;width:30%">
-    <div id="my_battle_info"></div>
-    <!--信息版1a - 战斗时显示我的动态参数-->
-    <div id="info_board_1a" hidden="hidden"></div>
-    <!--<div class="progress progress-danger">-->
-        <!--<div class="bar" style="width: 80%"></div>-->
-    <!--</div>-->
-    <!--<div class="progress progress-info">-->
-        <!--<div class="bar" style="width: 80%"></div>-->
-    <!--</div>-->
-
-    <!--信息版1b - 战斗时显示我的静态参数-->
-    <div id="info_board_1b"></div>
-</div>
-<div style="float:left;height:100%;width:20%">
-  <!--<div id="mp-div" style="display: none">-->
-    <!--<span style="display: none">MP / </span>-->
-    <!--<span  style="display: none" id="mp"></span>-->
-  <!--</div>-->
-  <!--<div id="active-skill-btns">-->
-  <!--</div>-->
-  <!--<br>-->
-
-    <!--<button type="button" id="wudi">点我无敌</button>-->
-    <!--<br>-->
-
-    <h5 hidden="hidden" id="zk">战况</h5>
-
-    <label class="label label-inverse" id="clear_board_0" style="display: none">CTRL + L</label>
-    <br>
-
-    <!--信息版0 - 显示战斗对白<br>-->
-    <textarea class="form-control" id="info_board_0" placeholder="暂无内容" style="height: 400px;width: 100%;display: none"></textarea>
-    <br>
-</div>
-<div style="float:left;height:100%;width:30%">
-    <div id="enemy_battle_info"></div>
-  <!--信息版2a - 战斗时显示敌人的动态参数-->
-  <div id="info_board_2a" hidden="hidden"></div>
-
-  <!--信息版2b - 战斗时显示敌人的静态参数-->
-  <div id="info_board_2b"></div>
-</div>
+    <div class="span3">
+        <h5>在线用户</h5>
+        <ul class="list-group" id="waiting_list">
+        </ul>
+        <input type="text" id="enemyName" placeholder="对手用户名" style="display: none">
+        <button type="button" class="btn btn-danger" id="battle">开始对战</button>
+        <br>
+        <!--信息版5 - 显示结构化信息-->
+        <div id="info_board_5" style="display: none"></div>
+    </div>
+    <div class="span3">
+        <div id="my_battle_info"></div>
+        <!--信息版1a - 战斗时显示我的动态参数-->
+        <div id="info_board_1a" hidden="hidden"></div>
+        <!--信息版1b - 战斗时显示我的静态参数-->
+        <div id="info_board_1b"></div>
+    </div>
+    <div class="span3">
+        <h5 hidden="hidden" id="zk">战况</h5>
+        <label class="label label-inverse" id="clear_board_0" style="display: none">CTRL + L</label>
+        <br>
+        <!--信息版0 - 显示战斗对白<br>-->
+        <textarea class="form-control" id="info_board_0" placeholder="暂无内容"
+                  style="height: 400px;width: 100%;display: none"></textarea>
+        <br>
+    </div>
+    <div class="span3">
+        <div id="enemy_battle_info"></div>
+        <!--信息版2a - 战斗时显示敌人的动态参数-->
+        <div id="info_board_2a" hidden="hidden"></div>
+        <!--信息版2b - 战斗时显示敌人的静态参数-->
+        <div id="info_board_2b"></div>
+    </div>
 </div>
