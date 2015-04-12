@@ -112,6 +112,7 @@ io.socket.on('connect', function socketConnected() {
 
   // When the socket disconnects, hide the UI until we reconnect.
   io.socket.on('disconnect', function() {
+      // TODO 离开『战斗』页面
   });
 
   $('#battle').click(battle);
@@ -123,6 +124,13 @@ io.socket.on('connect', function socketConnected() {
   $('#getWaitingBattleUser').click(getWaitingBattleUser);
   $('#getUserInfo').click(getUserInfo);
   $('#clear_board_0').click(clearFightInfo);
+
+    // 进入『战斗』页面
+    if ($(location).attr('href').indexOf("battle_field") > -1) {
+        login();
+        online(waitingBattle);
+    }
+
 });
 
 
@@ -136,27 +144,27 @@ function wudi() {
 }
 
 function login() {
-  var login = $('#login').val();
-  myName = login;
-  var password = $('#password').val();
-  io.socket.post('/session/create', {login: login, password: password}, function(data) {
-    var res = data;
-    var code = res.code;
-    if (code == 200) {
-      token = res.user_info.token;
-      var nickname = res.user_info.nickname ? res.user_info.nickname : res.user_info.login;
-      showInBoard("info_board_5", "欢迎回来 " + nickname);
-    } else {
-      showInBoard("info_board_5", "登录失败");
-    }
-  });
+    myName = $('#login').text();
+  //var password = $('#password').val();
+  //io.socket.post('/session/create', {login: login, password: password}, function(data) {
+  //  var res = data;
+  //  var code = res.code;
+  //  if (code == 200) {
+  //    token = res.user_info.token;
+  //    var nickname = res.user_info.nickname ? res.user_info.nickname : res.user_info.login;
+  //    showInBoard("info_board_5", "欢迎回来 " + nickname);
+  //  } else {
+  //    showInBoard("info_board_5", "登录失败");
+  //  }
+  //});
 }
 
-function online() {
+function online(done) {
   io.socket.post('/session/online', {token:token}, function(data) {
     var code = data.code;
-    if (code == 200) {
+    if (code === 200) {
       showInBoard("info_board_5", "你上线了");
+        done();
     } else {
       showInBoard("info_board_5", "上线失败");
     }
@@ -166,7 +174,7 @@ function online() {
 function getOnlineUser() {
   io.socket.post('/session/getOnlineUser', function(data) {
     var code = data.code;
-    if (code == 200) {
+    if (code === 200) {
       var users = data.users;
       var info = {};
       for (var i = 0; i < users.length; i++) {
@@ -182,7 +190,7 @@ function getOnlineUser() {
 function waitingBattle() {
   io.socket.post('/session/waitingBattle', function(data) {
     var code = data.code;
-    if (code == 200) {
+    if (code === 200) {
       showInBoard("info_board_5", "等待战斗！");
     } else {
       showInBoard("info_board_5", "咦！再试试");

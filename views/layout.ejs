@@ -26,6 +26,8 @@
         <span><a href="/session/destroy" class="btn btn-info pull-right">登出</a></span>
     </div>
 </div>
+<span id="login" hidden="hidden"><%= req.session.user_detail.login %></span>
+<span id="nickname" hidden="hidden"><%= req.session.user_detail.nickname %></span>
 <% } %>
 <div class="jumbotron">
     <div><%- body %></div>

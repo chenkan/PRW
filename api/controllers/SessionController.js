@@ -46,16 +46,17 @@ module.exports = {
     },
 
     online: function (req, res) {
-        var token = req.param('token');
+        //var token = req.param('token');
+        var login = req.session.user_detail.login;
         var socketId = sails.sockets.id(req.socket);
 
-        User.find({token: token}).exec(function (err, data) {
+        User.find({login: login}).exec(function (err, data) {
             var rsp = {};
             if (err) {
                 rsp.code = 500;
                 res.send(rsp);
             } else {
-                if (data.length != 1) {
+                if (data.length !== 1) {
                     rsp.code = 400;
                     res.send(rsp);
                 } else {
