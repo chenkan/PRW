@@ -11,53 +11,63 @@ var enemyName = '';
 var meObj;
 var mp;
 var mpClock;
+var mpMax = 250;
+var hpMax;
 
 // Attach a listener which fires when a connection is established:
 io.socket.on('connect', function socketConnected() {
 
   io.socket.on('battle4init', function(data) {
-    var trimSet = ["desc", "login", "nickname", "increaseSelfType","increaseSelfValue","decreaseSelfType","decreaseSelfValue","decreaseOtherType","decreaseOtherValue","specialType","specialValue","interval","duration","upgradePoint","diamond","type","gold_coin","my_cards","password","socket","status","token","updatedAt","skill_point"];
+    var trimSet = ["desc", "increaseSelfType","increaseSelfValue","decreaseSelfType","decreaseSelfValue","decreaseOtherType","decreaseOtherValue","specialType","specialValue","interval","duration","upgradePoint","diamond","type","gold_coin","my_cards","password","socket","status","token","updatedAt","skill_point"];
     trimJson(data, trimSet);
     if (data.code == 200) {
       meObj = data.data.user_info[myName];
 
       // 初始化主动技能卡牌
-      $('.active-skill-btn').remove();
-      $.each(meObj.active_skill_cards, function (index, value) {
-        var e = $("<button class='active-skill-btn' data-activeskillid='" + value.id + "' data-cost='" + value['cost'] + "'>" + value.name + " " + value['cost'] + "MP</button>").appendTo('#active-skill-btns');
-        e.click(function (event) {
-          var btn = $(event.target);
-          var skillId = btn.data('activeskillid');
-          var skillCost = btn.data('cost');
-          if (skillCost > mp) {
-            $.alert('MP值不足');
-          } else {
-            mp -= skillCost;
-            $('#mp').html(mp);
-            btn.prop("disabled", true);
-            io.socket.post('/activeskill/on', {myName: myName, enemyName: enemyName, skillId: skillId});
-          }
-        })
-      });
+      //$('.active-skill-btn').remove();
+      //$.each(meObj.active_skill_cards, function (index, value) {
+      //  var e = $("<button class='active-skill-btn' data-activeskillid='" + value.id + "' data-cost='" + value['cost'] + "'>" + value.name + " " + value['cost'] + "MP</button>").appendTo('#active-skill-btns');
+      //  e.click(function (event) {
+      //    var btn = $(event.target);
+      //    var skillId = btn.data('activeskillid');
+      //    var skillCost = btn.data('cost');
+      //    if (skillCost > mp) {
+      //      $.alert('MP值不足');
+      //    } else {
+      //      mp -= skillCost;
+      //      $('#mp').html(mp);
+      //      btn.prop("disabled", true);
+      //      io.socket.post('/activeskill/on', {myName: myName, enemyName: enemyName, skillId: skillId});
+      //    }
+      //  });
+      //});
 
       // 设置MP值 - 每秒增加1点MP
-      $('#mp-div').show();
+      //$('#mp-div').show();
       mp = 0;
-      $('#mp').html(mp);
+      //$('#mp').html(mp);
+        $('#my_mp').text("MP : " + mp);
       mpClock = setInterval(function () {
         mp += 1;
-        $('#mp').html(mp);
+        //$('#mp').html(mp);
+          $('#my_mp').text("MP : " + mp);
       }, 1000);
 
       msgBoard(data.data.fight_info);
-      showInBoard("info_board_1b", data.data.user_info[myName]);
+        showMyBattleInfo(data.data.user_info[myName]);
+        drawCardsInBattle("info_board_1b", data.data.user_info[myName]);
       var players = Object.keys(data.data.user_info);
       for (var p in players) {
-        if (players[p] != myName) {
+        if (players[p] !== myName) {
           enemyName = players[p];
         }
       }
-      showInBoard("info_board_2b", data.data.user_info[enemyName]);
+        showEnemyBattleInfo(data.data.user_info[enemyName]);
+        drawCardsInBattle("info_board_2b", data.data.user_info[enemyName]);
+
+        $('#zk').show();
+        $('#clear_board_0').show();
+        $('#info_board_0').show();
     } else {
       showInBoard("info_board_5", "艹 挂了");
 
@@ -67,8 +77,10 @@ io.socket.on('connect', function socketConnected() {
   io.socket.on('battle4timer', function(data) {
     if (data.code == 200) {
       showInBoard("info_board_1a", data.data.user_info[myName]);
+        $("#my_hp").text(data.data.user_info[myName]);
       showInBoard("info_board_2a", data.data.user_info[enemyName]);
-      msgBoard(data.data.fight_info);
+        $("#enemy_hp").text(data.data.user_info[enemyName]);
+        msgBoard(data.data.fight_info);
     } else {
       showInBoard("info_board_5", "艹 挂了");
     }
@@ -317,4 +329,75 @@ function chooseEnemy(who) {
 
     $("#" + who).addClass("list-group-item-danger");
     $("#enemyName").val(who);
+}
+
+/**
+ * 绘制战斗时携带卡牌
+ */
+function drawCardsInBattle(board, who) {
+    $('#' + board).empty();
+
+    var equipment_cards = who.equipment_cards;
+    $("<div><h5 class='badge badge-inverse'>装备</h5></div>").appendTo('#' + board);
+    $.each(equipment_cards, function (index, card) {
+        var e = $("<div><button>" + card.name + "</button></div>").appendTo('#' + board);
+        e.children(":first").addClass("btn btn-info");
+    });
+
+    var active_skill_cards = who.active_skill_cards;
+    $("<div><h5 class='badge badge-inverse'>主动技能</h5></div>").appendTo('#' + board);
+    $.each(active_skill_cards, function (index, value) {
+        var e = $("<div><button class='active-skill-btn' data-activeskillid='" + value.id + "' data-cost='" + value.cost + "'>" + value.name + " / " + value.cost + "MP</button></div>").appendTo('#' + board);
+        if (board === "info_board_2b") { // 对手的主动技能卡牌
+            console.log("...");
+        } else {
+            e.click(function (event) {
+                var btn = $(event.target);
+                var skillId = btn.data('activeskillid');
+                var skillCost = btn.data('cost');
+                if (skillCost > mp) {
+                    $.alert('MP值不足');
+                } else {
+                    mp -= skillCost;
+                    $('#mp').html(mp);
+                    btn.prop("disabled", true);
+                    io.socket.post('/activeskill/on', {myName: myName, enemyName: enemyName, skillId: skillId});
+                }
+            });
+        }
+        //var e = $("<div><button>" + card.name + " / " + card.cost + " MP" + "</button></div>").appendTo('#' + board);
+        e.children(":first").addClass("btn btn-info");
+    });
+
+    var passive_skill_cards = who.passive_skill_cards;
+    $("<div><h5 class='badge badge-inverse'>被动技能</h5></div>").appendTo('#' + board);
+    $.each(passive_skill_cards, function (index, card) {
+        var e = $("<div><button>" + card.name + "</button></div>").appendTo('#' + board);
+        e.children(":first").addClass("btn btn-info");
+    });
+
+}
+
+function showMyBattleInfo(who) {
+    var e = $('#my_battle_info');
+    e.empty();
+    $('<h5>' + who.nickname + "</h5>").appendTo(e);
+
+    var e2 = $("<div></div>").appendTo(e);
+    $('<span class="label label-important" id="my_hp">' + "HP : " + who.hp + "</span>").appendTo(e2);
+
+    var e3 = $("<div></div>").appendTo(e);
+    $('<span class="label label-inverse" id="my_mp">' + "MP : 0" + "</span>").appendTo(e3);
+}
+
+function showEnemyBattleInfo(who) {
+    var e = $('#enemy_battle_info');
+    e.empty();
+    $('<h5>' + who.nickname + "</h5>").appendTo(e);
+
+    var e2 = $("<div></div>").appendTo(e);
+    $('<span class="label label-important" id="enemy_hp">' + "HP : " + who.hp + "</span>").appendTo(e2);
+
+    var e3 = $("<div></div>").appendTo(e);
+    $('<span class="label label-inverse" id="enemy_mp">' + "MP : ??" + "</span>").appendTo(e3);
 }

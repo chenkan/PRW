@@ -32,36 +32,46 @@
   <div id="info_board_5" style="display: none"></div>
 </div>
 <div style="float:left;height:100%;width:30%">
-    信息版1a - 战斗时显示我的动态参数
-    <div id="info_board_1a"></div>
+    <div id="my_battle_info"></div>
+    <!--信息版1a - 战斗时显示我的动态参数-->
+    <div id="info_board_1a" hidden="hidden"></div>
+    <!--<div class="progress progress-danger">-->
+        <!--<div class="bar" style="width: 80%"></div>-->
+    <!--</div>-->
+    <!--<div class="progress progress-info">-->
+        <!--<div class="bar" style="width: 80%"></div>-->
+    <!--</div>-->
 
-    信息版1b - 战斗时显示我的静态参数
+    <!--信息版1b - 战斗时显示我的静态参数-->
     <div id="info_board_1b"></div>
 </div>
 <div style="float:left;height:100%;width:20%">
-  <div id="mp-div" style="display: none">
-    <span>MP / </span>
-    <span id="mp"></span>
-  </div>
-  <div id="active-skill-btns">
-  </div>
-  <br>
+  <!--<div id="mp-div" style="display: none">-->
+    <!--<span style="display: none">MP / </span>-->
+    <!--<span  style="display: none" id="mp"></span>-->
+  <!--</div>-->
+  <!--<div id="active-skill-btns">-->
+  <!--</div>-->
+  <!--<br>-->
 
     <!--<button type="button" id="wudi">点我无敌</button>-->
     <!--<br>-->
 
-    <button type="button" id="clear_board_0">点我清空战斗对白</button>
+    <h5 hidden="hidden" id="zk">战况</h5>
+
+    <label class="label label-inverse" id="clear_board_0" style="display: none">CTRL + L</label>
     <br>
 
-    信息版0 - 显示战斗对白<br>
-    <textarea id="info_board_0" placeholder="暂无内容" style="height: 400px;width: 100%"></textarea>
+    <!--信息版0 - 显示战斗对白<br>-->
+    <textarea class="form-control" id="info_board_0" placeholder="暂无内容" style="height: 400px;width: 100%;display: none"></textarea>
     <br>
 </div>
 <div style="float:left;height:100%;width:30%">
-  信息版2a - 战斗时显示敌人的动态参数
-  <div id="info_board_2a"></div>
+    <div id="enemy_battle_info"></div>
+  <!--信息版2a - 战斗时显示敌人的动态参数-->
+  <div id="info_board_2a" hidden="hidden"></div>
 
-  信息版2b - 战斗时显示敌人的静态参数
+  <!--信息版2b - 战斗时显示敌人的静态参数-->
   <div id="info_board_2b"></div>
 </div>
 </div>
