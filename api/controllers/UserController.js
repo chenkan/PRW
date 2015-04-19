@@ -39,7 +39,8 @@ module.exports = {
     },
 
     show: function (req, res, next) {
-        User.findOne(req.param('id'), function foundUser(err, user) {
+        var login = req.session.user_detail.login;
+        User.findOne({login: login}, function foundUser(err, user) {
             if (err) {
                 return next(err);
             }
