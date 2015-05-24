@@ -19,7 +19,9 @@
 2. https://github.com/balderdashy/sailsChat/wiki/Overview
 3. http://sailsjs.org/#/documentation/concepts/ORM/Associations/ManytoMany.html
 4. http://sailsjs.org/#/documentation/concepts/ORM/Associations/OneWayAssociation.html
- 
+
 #### DEMO
+
+试玩: https://still-peak-2873.herokuapp.com/
 
 ![实物截图](https://cloud.githubusercontent.com/assets/1892479/7452327/f3c611f4-f28e-11e4-82cd-88b48e3fb6fb.jpg)
