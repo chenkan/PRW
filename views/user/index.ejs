@@ -1,0 +1,63 @@
+<div class="container">
+	<h3>User Listing</h3>
+	<table class='table table-hover table-condensed'>
+	<tr>
+
+	<th> 帐号 </th>
+	<th> 昵称 </th>
+        <th> 机甲 </th>
+        <th> 金币 </th>
+        <th> 钻石 </th>
+        <th> 技能点 </th>
+        <th> 状态 </th>
+        <!--<th> 在线上 </th>-->
+        <th> 战斗次数 </th>
+        <th> 胜利 </th>
+        <th> 失败 </th>
+        <th> 主武器 </th>
+        <th> 副武器 </th>
+        <th> 机体 </th>
+        <th> 负载 </th>
+        <th> 主动技能 </th>
+        <th> 被动技能 </th>
+        <th> 所有卡牌 </th>
+
+
+	<th></th>
+	<th></th>
+	<th></th>
+</tr>
+	<% _.forEach(users, function(user) { %>
+        <tr>
+			<td><%= user.login%></td>
+			<td><%= user.nickname%></td>
+        <td><%= user.robot_name%></td>
+        <td><%= user.gold_coin%></td>
+        <td><%= user.diamond%></td>
+        <td><%= user.skill_point%></td>
+        <td><%= user.status%></td>
+        <!--<td><%= user.is_online%></td>-->
+        <td><%= user.fight_info.total%></td>
+        <td><%= user.fight_info.win%></td>
+        <td><%= user.fight_info.fail%></td>
+        <td><%= user.equipment_cards.main_weapon%></td>
+        <td><%= user.equipment_cards.assist_weapon%></td>
+        <td><%= user.equipment_cards.engine_body%></td>
+        <td><%= user.equipment_cards.accessory%></td>
+        <td><%= user.active_skill_cards%></td>
+        <td><%= user.passive_skill_cards%></td>
+        <td><%= user.my_cards%></td>
+        </tr>
+<% }) %>
+	</table>
+	<!--<a href="/user/new/" class="btn btn-success btn-sm" role="button">New User</a> |-->
+	<a href="/">all scaffolds</a>
+
+    <p>
+        用户状态<br>
+        global.status.STATUS_OFFLINE        = 0;<br>
+        global.status.STATUS_ONLINE         = 1;<br>
+        global.status.STATUS_WAITING_BATTLE = 2;<br>
+        global.status.STATUS_IN_BATTLE      = 3;<br>
+    </p>
+</div>
